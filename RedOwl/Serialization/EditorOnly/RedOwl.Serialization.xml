@@ -91,11 +91,16 @@
             <param name="value">The value to serialize.</param>
             <param name="writer">The writer to serialize with.</param>
         </member>
-        <member name="M:RedOwl.Serialization.Editor.AOTSupportUtilities.ScanProjectForSerializedTypes(System.Collections.Generic.List{System.Type}@)">
+        <member name="M:RedOwl.Serialization.Editor.AOTSupportUtilities.ScanProjectForSerializedTypes(System.Collections.Generic.List{System.Type}@,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Collections.Generic.List{System.String})">
             <summary>
             Scans the project's build scenes and resources, plus their dependencies, for serialized types to support. Progress bars are shown during the scan.
             </summary>
             <param name="serializedTypes">The serialized types to support.</param>
+            <param name="scanBuildScenes">Whether to scan the project's build scenes.</param>
+            <param name="scanAllAssetBundles">Whether to scan all the project's asset bundles.</param>
+            <param name="scanPreloadedAssets">Whether to scan the project's preloaded assets.</param>
+            <param name="scanResources">Whether to scan the project's resources.</param>
+            <param name="resourcesToScan">An optional list of the resource paths to scan. Only has an effect if the scanResources argument is true. All the resources will be scanned if null.</param>
             <returns>true if the scan succeeded, false if the scan failed or was cancelled</returns>
         </member>
         <member name="M:RedOwl.Serialization.Editor.AOTSupportUtilities.GenerateDLL(System.String,System.String,System.Collections.Generic.List{System.Type},System.Boolean)">
@@ -416,48 +421,48 @@
             MemberInfo method extensions.
             </summary>
         </member>
-        <member name="M:RedOwl.Serialization.Utilities.MemberInfoExtensions.IsDefined``1(System.Reflection.MemberInfo,System.Boolean)">
+        <member name="M:RedOwl.Serialization.Utilities.MemberInfoExtensions.IsDefined``1(System.Reflection.ICustomAttributeProvider,System.Boolean)">
             <summary>
             Returns true if the attribute whose type is specified by the generic argument is defined on this member
             </summary>
         </member>
-        <member name="M:RedOwl.Serialization.Utilities.MemberInfoExtensions.IsDefined``1(System.Reflection.MemberInfo)">
+        <member name="M:RedOwl.Serialization.Utilities.MemberInfoExtensions.IsDefined``1(System.Reflection.ICustomAttributeProvider)">
             <summary>
             Returns true if the attribute whose type is specified by the generic argument is defined on this member
             </summary>
         </member>
-        <member name="M:RedOwl.Serialization.Utilities.MemberInfoExtensions.GetAttribute``1(System.Reflection.MemberInfo,System.Boolean)">
+        <member name="M:RedOwl.Serialization.Utilities.MemberInfoExtensions.GetAttribute``1(System.Reflection.ICustomAttributeProvider,System.Boolean)">
             <summary>
             Returns the first found custom attribute of type T on this member
             Returns null if none was found
             </summary>
         </member>
-        <member name="M:RedOwl.Serialization.Utilities.MemberInfoExtensions.GetAttribute``1(System.Reflection.MemberInfo)">
+        <member name="M:RedOwl.Serialization.Utilities.MemberInfoExtensions.GetAttribute``1(System.Reflection.ICustomAttributeProvider)">
             <summary>
             Returns the first found non-inherited custom attribute of type T on this member
             Returns null if none was found
             </summary>
         </member>
-        <member name="M:RedOwl.Serialization.Utilities.MemberInfoExtensions.GetAttributes``1(System.Reflection.MemberInfo)">
+        <member name="M:RedOwl.Serialization.Utilities.MemberInfoExtensions.GetAttributes``1(System.Reflection.ICustomAttributeProvider)">
             <summary>
             Gets all attributes of the specified generic type.
             </summary>
             <param name="member">The member.</param>
         </member>
-        <member name="M:RedOwl.Serialization.Utilities.MemberInfoExtensions.GetAttributes``1(System.Reflection.MemberInfo,System.Boolean)">
+        <member name="M:RedOwl.Serialization.Utilities.MemberInfoExtensions.GetAttributes``1(System.Reflection.ICustomAttributeProvider,System.Boolean)">
             <summary>
             Gets all attributes of the specified generic type.
             </summary>
             <param name="member">The member.</param>
             <param name="inherit">If true, specifies to also search the ancestors of element for custom attributes.</param>
         </member>
-        <member name="M:RedOwl.Serialization.Utilities.MemberInfoExtensions.GetAttributes(System.Reflection.MemberInfo)">
+        <member name="M:RedOwl.Serialization.Utilities.MemberInfoExtensions.GetAttributes(System.Reflection.ICustomAttributeProvider)">
             <summary>
             Gets all attribute instances defined on a MemeberInfo.
             </summary>
             <param name="member">The member.</param>
         </member>
-        <member name="M:RedOwl.Serialization.Utilities.MemberInfoExtensions.GetAttributes(System.Reflection.MemberInfo,System.Boolean)">
+        <member name="M:RedOwl.Serialization.Utilities.MemberInfoExtensions.GetAttributes(System.Reflection.ICustomAttributeProvider,System.Boolean)">
             <summary>
             Gets all attribute instances on a MemberInfo.
             </summary>
@@ -1127,168 +1132,6 @@
             </summary>
             <param name="obj">The Unity object to check.</param>
             <returns>True if the object is null, missing or destroyed; otherwise false.</returns>
-        </member>
-        <member name="T:RedOwl.Serialization.Utilities.AssemblyTypeFlags">
-            <summary>
-            AssemblyTypeFlags is a bitmask used to filter types and assemblies related to Unity.
-            </summary>
-            <seealso cref="T:RedOwl.Serialization.Utilities.AssemblyUtilities"/>
-        </member>
-        <member name="F:RedOwl.Serialization.Utilities.AssemblyTypeFlags.None">
-            <summary>
-            Excludes all types.
-            </summary>
-        </member>
-        <member name="F:RedOwl.Serialization.Utilities.AssemblyTypeFlags.UserTypes">
-            <summary>
-            UserTypes includes all custom user scripts that are not located in an editor or plugin folder.
-            </summary>
-        </member>
-        <member name="F:RedOwl.Serialization.Utilities.AssemblyTypeFlags.PluginTypes">
-            <summary>
-            PluginTypes includes all types located in the plugins folder and are not located in an editor folder.
-            </summary>
-        </member>
-        <member name="F:RedOwl.Serialization.Utilities.AssemblyTypeFlags.UnityTypes">
-            <summary>
-            UnityTypes includes all types depended on UnityEngine and from UnityEngine, except editor, plugin and user types.
-            </summary>
-        </member>
-        <member name="F:RedOwl.Serialization.Utilities.AssemblyTypeFlags.UserEditorTypes">
-            <summary>
-            UserEditorTypes includes all custom user scripts that are located in an editor folder but not in a plugins folder.
-            </summary>
-        </member>
-        <member name="F:RedOwl.Serialization.Utilities.AssemblyTypeFlags.PluginEditorTypes">
-            <summary>
-            PluginEditorTypes includes all editor types located in the plugins folder.
-            </summary>
-        </member>
-        <member name="F:RedOwl.Serialization.Utilities.AssemblyTypeFlags.UnityEditorTypes">
-            <summary>
-            UnityEditorTypes includes all editor types that are not user editor types nor plugin editor types.
-            </summary>
-        </member>
-        <member name="F:RedOwl.Serialization.Utilities.AssemblyTypeFlags.OtherTypes">
-            <summary>
-            OtherTypes includes all other types that are not depended on UnityEngine or UnityEditor.
-            </summary>
-        </member>
-        <member name="F:RedOwl.Serialization.Utilities.AssemblyTypeFlags.CustomTypes">
-            <summary>
-            CustomTypes includes includes all types manually added to the Unity project.
-            This includes UserTypes, UserEditorTypes, PluginTypes and PluginEditorTypes.
-            </summary>
-        </member>
-        <member name="F:RedOwl.Serialization.Utilities.AssemblyTypeFlags.GameTypes">
-            <summary>
-            GameTypes includes all assemblies that are likely to be included in builds.
-            This includes UserTypes, PluginTypes, UnityTypes and OtherTypes.
-            </summary>
-        </member>
-        <member name="F:RedOwl.Serialization.Utilities.AssemblyTypeFlags.EditorTypes">
-            <summary>
-            EditorTypes includes UserEditorTypes, PluginEditorTypes and UnityEditorTypes.
-            </summary>
-        </member>
-        <member name="F:RedOwl.Serialization.Utilities.AssemblyTypeFlags.All">
-            <summary>
-            All includes UserTypes, PluginTypes, UnityTypes, UserEditorTypes, PluginEditorTypes, UnityEditorTypes and OtherTypes.
-            </summary>
-        </member>
-        <member name="T:RedOwl.Serialization.Utilities.AssemblyUtilities">
-            <summary>
-            A utility class for finding types in various asssembly.
-            </summary>
-        </member>
-        <member name="F:RedOwl.Serialization.Utilities.AssemblyUtilities.ASSEMBLY_LOAD_QUEUE_LOCK">
-            <summary>
-            Lock for the assembly load queue
-            </summary>
-        </member>
-        <member name="F:RedOwl.Serialization.Utilities.AssemblyUtilities.MAIN_LOCK">
-            <summary>
-            Lock for everything but the assembly load queue, IsDynamic cache, and the initialized and initializing fields
-            </summary>
-        </member>
-        <member name="M:RedOwl.Serialization.Utilities.AssemblyUtilities.#cctor">
-            <summary>
-            Initializes the <see cref="T:RedOwl.Serialization.Utilities.AssemblyUtilities"/> class.
-            </summary>
-        </member>
-        <member name="M:RedOwl.Serialization.Utilities.AssemblyUtilities.Reload">
-            <summary>
-            Re-scans the entire AppDomain.
-            </summary>
-        </member>
-        <member name="M:RedOwl.Serialization.Utilities.AssemblyUtilities.GetAllAssemblies">
-            <summary>
-            Gets an <see cref="T:RedOwl.Serialization.Utilities.ImmutableList"/> of all assemblies in the current <see cref="T:System.AppDomain"/>.
-            </summary>
-            <returns>An <see cref="T:RedOwl.Serialization.Utilities.ImmutableList"/> of all assemblies in the current <see cref="T:System.AppDomain"/>.</returns>
-        </member>
-        <member name="M:RedOwl.Serialization.Utilities.AssemblyUtilities.GetAssemblyTypeFlag(System.Reflection.Assembly)">
-            <summary>
-            Gets the <see cref="T:RedOwl.Serialization.Utilities.AssemblyTypeFlags"/> for a given assembly.
-            </summary>
-            <param name="assembly">The assembly.</param>
-            <returns>The <see cref="T:RedOwl.Serialization.Utilities.AssemblyTypeFlags"/> for a given assembly.</returns>
-            <exception cref="T:System.NullReferenceException"><paramref name="assembly"/> is null.</exception>
-        </member>
-        <member name="M:RedOwl.Serialization.Utilities.AssemblyUtilities.GetTypeByCachedFullName(System.String)">
-            <summary>
-            Gets the type.
-            </summary>
-            <param name="fullName">The full name of the type without any assembly information.</param>
-        </member>
-        <member name="M:RedOwl.Serialization.Utilities.AssemblyUtilities.GetType(System.String)">
-            <summary>
-            Gets the type.
-            </summary>
-        </member>
-        <member name="M:RedOwl.Serialization.Utilities.AssemblyUtilities.IsDependentOn(System.Reflection.Assembly,System.Reflection.Assembly)">
-            <summary>
-            Determines whether an assembly is depended on another assembly.
-            </summary>
-            <param name="assembly">The assembly.</param>
-            <param name="otherAssembly">The other assembly.</param>
-            <returns>
-              <c>true</c> if <paramref name="assembly"/> has a reference in <paramref name="otherAssembly"/> or <paramref name="assembly"/> is the same as <paramref name="otherAssembly"/>.
-            </returns>
-            <exception cref="T:System.NullReferenceException"><paramref name="assembly"/> is null.</exception>
-            <exception cref="T:System.NullReferenceException"><paramref name="otherAssembly"/> is null.</exception>
-        </member>
-        <member name="M:RedOwl.Serialization.Utilities.AssemblyUtilities.IsDynamic(System.Reflection.Assembly)">
-            <summary>
-            Determines whether the assembly module is a of type <see cref="T:System.Reflection.Emit.ModuleBuilder"/>.
-            </summary>
-            <param name="assembly">The assembly.</param>
-            <returns>
-              <c>true</c> if the specified assembly of type <see cref="T:System.Reflection.Emit.ModuleBuilder"/>; otherwise, <c>false</c>.
-            </returns>
-            <exception cref="T:System.ArgumentNullException">assembly</exception>
-        </member>
-        <member name="M:RedOwl.Serialization.Utilities.AssemblyUtilities.GetAssemblyDirectory(System.Reflection.Assembly)">
-            <summary>
-            Gets the full file path to a given assembly.
-            </summary>
-            <param name="assembly">The assembly.</param>
-            <returns>The full file path to a given assembly, or <c>Null</c> if no file path was found.</returns>
-            <exception cref="T:System.NullReferenceException"><paramref name="assembly"/> is Null.</exception>
-        </member>
-        <member name="M:RedOwl.Serialization.Utilities.AssemblyUtilities.GetAssemblyFilePath(System.Reflection.Assembly)">
-            <summary>
-            Gets the full directory path to a given assembly.
-            </summary>
-            <param name="assembly">The assembly.</param>
-            <returns>The full directory path in which a given assembly is located, or <c>Null</c> if no file path was found.</returns>
-        </member>
-        <member name="M:RedOwl.Serialization.Utilities.AssemblyUtilities.GetTypes(RedOwl.Serialization.Utilities.AssemblyTypeFlags)">
-            <summary>
-            Get types from the current AppDomain with a specified <see cref="T:RedOwl.Serialization.Utilities.AssemblyTypeFlags"/> filter.
-            </summary>
-            <param name="assemblyTypeFlags">The <see cref="T:RedOwl.Serialization.Utilities.AssemblyTypeFlags"/> filters.</param>
-            <returns>Types from the current AppDomain with the specified <see cref="T:RedOwl.Serialization.Utilities.AssemblyTypeFlags"/> filters.</returns>
         </member>
         <member name="T:RedOwl.Serialization.Utilities.ICache`1">
             <summary>
@@ -8830,22 +8673,6 @@
             </summary>
         </member>
         <member name="M:RedOwl.Serialization.SerializedMonoBehaviour.OnBeforeSerialize">
-            <summary>
-            Invoked before serialization has taken place.
-            </summary>
-        </member>
-        <member name="T:RedOwl.Serialization.SerializedNetworkBehaviour">
-            <summary>
-            A Unity NetworkBehaviour which is serialized by the Sirenix serialization system.
-            Please note that Odin's custom serialization only works for non-synced variables - [SyncVar] and SyncLists still have the same limitations.
-            </summary>
-        </member>
-        <member name="M:RedOwl.Serialization.SerializedNetworkBehaviour.OnAfterDeserialize">
-            <summary>
-            Invoked after deserialization has taken place.
-            </summary>
-        </member>
-        <member name="M:RedOwl.Serialization.SerializedNetworkBehaviour.OnBeforeSerialize">
             <summary>
             Invoked before serialization has taken place.
             </summary>
