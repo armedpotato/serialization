@@ -1,11 +1,11 @@
 {
   "name": "com.redowl.serialization",
-  "displayName":  "RedOwl - Serialization",
+  "displayName": "RedOwl - Serialization",
   "version": "1.0.0",
-  "description": "",
+  "description": "Red Owl Games version of Odin Serializer",
   "repository": {
     "type": "git",
-    "url": "https://github.com/rocktavious/redowl-serialization"
+    "url": "https://github.com/red-owl-games/serialization"
   },
   "author": "Kyle Rockman",
   "license": "MIT",
@@ -14,5 +14,6 @@
     "unity3d-package",
     "serialization"
   ],
-  "category": "RedOwl"
+  "category": "RedOwl",
+  "unity": "2019.1"
 }
